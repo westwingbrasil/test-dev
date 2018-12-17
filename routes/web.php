@@ -31,6 +31,8 @@ Route::group(['prefix' => 'clients', 'middleware' => 'auth'], function () {
     Route::get('/delete/{id}', 'ClientsController@delete');
 
     Route::get('/search', 'ClientsController@search');
+
+    Route::get('/report', 'ReportsController@clients');
 });
 
 Route::group(['prefix' => 'tickets', 'middleware' => 'auth'], function () {

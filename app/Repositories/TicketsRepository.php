@@ -50,7 +50,10 @@ class TicketsRepository implements TicketsRepositoryContract
 
     public function details($ticket_id)
     {
-        $ticket = $this->ticket->find($ticket_id);
+        $ticket = $this->ticket
+            ->with('client')
+            ->where('ticket_id', $ticket_id)
+            ->paginate(5);
 
         return view('tickets.details', ['ticket' => $ticket]);
     }

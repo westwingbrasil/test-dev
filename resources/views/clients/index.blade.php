@@ -8,16 +8,12 @@
                     <div class="card-header">Lista de clientes</div>
                     <form method="get" action="{{ url('/clients/search') }}">
                         <div class="card-body row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <i class="fas fa-search h4 text-body"></i>
-                            </div>
-                            <!--end of col-->
                             <div class="col">
                                 <input class="form-control form-control" name="search" type="search" placeholder="buscar...">
                             </div>
                             <!--end of col-->
                             <div class="col-auto">
-                                <button class="btn btn btn-success" type="submit">Buscar</button>
+                                <button class="btn btn btn-success" type="submit"><i class="fas fa-search" style="font-size: 20px;"></i></button>
                             </div>
                             <!--end of col-->
                         </div>
@@ -47,17 +43,17 @@
                                     <td class="custom-table"> {{ $client->client_email }} </td>
                                     <td class="custom-table">
                                         <a class="btn btn-primary" href="{{ url('clients/details') . '/' . $client->client_id }}">
-                                            <i class="fa fa-pencil-square-o"></i> Detalhes
+                                            <i class="fa fa-show"></i> Detalhes
                                         </a>
                                     </td>
                                     <td class="custom-table">
                                         <a class="btn btn-primary" href="{{ url('clients/update') . '/' . $client->client_id }}">
-                                            <i class="fa fa-pencil-square-o"></i> Editar
+                                            Editar
                                         </a>
                                     </td>
                                     <td class="custom-table">
                                         <a class="btn btn-danger" href="{{ url('clients/delete') . '/' . $client->client_id }}" onclick="return confirm(' Você Deseja Realmente deletar ? ')" >
-                                            <i class="fa fa-trash"></i> Excluir
+                                            Excluir
                                         </a>
                                     </td>
                                 </tr>

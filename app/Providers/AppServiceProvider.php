@@ -25,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\Repositories\Contracts\TicketsRepositoryContract', 'App\Repositories\TicketsRepository');
         $this->app->bind('App\Repositories\Contracts\ClientsRepositoryContract', 'App\Repositories\ClientsRepository');
+        $this->app->bind('App\Repositories\Contracts\ReportsRepositoryContract', 'App\Repositories\ReportsRepository');
     }
 }

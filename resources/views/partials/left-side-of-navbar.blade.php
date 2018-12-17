@@ -5,6 +5,7 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" href="{{ url('/clients/new') }}">Cadastrar</a>
             <a class="dropdown-item" href="{{ url('/clients') }}">Listar</a>
+            <a class="dropdown-item" href="{{ url('/clients/report') }}" target="_blank">Relatório</a>
         </div>
     </li>
 
