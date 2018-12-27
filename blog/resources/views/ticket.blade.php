@@ -3,6 +3,7 @@
 ?>
 <div class="flex-center position-ref full-height">
     <div class="container">
+    @include('flash::message')
     <div class="row mb-4">
         <div class="col-12">
             <div class="top-right links">

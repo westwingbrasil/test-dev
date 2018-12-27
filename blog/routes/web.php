@@ -17,3 +17,5 @@ Route::get('/', function () {
 
 Route::get('ticket', 'TicketController@create')->name('ticket.create');
 Route::post('ticket', 'TicketController@store')->name('ticket.store');
+Route::get('users', 'UserController@index');
+Route::post('users', 'UserController@create');

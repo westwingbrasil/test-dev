@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Auth;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
+use App\User;
 class TicketController extends Controller
 {
     public function create() {
@@ -19,11 +18,15 @@ class TicketController extends Controller
         $ticket['ticketTitle'] = $request->get('ticketTitle');
         $ticket['ticketDescription'] = $request->get('ticketDescription');
         $ticket['orderNumber'] = $request->get('orderNumber');
+
+        $user = User::firstOrNew(['email' => $request->get('email')]);
+        $user->name = 'john';
+        $user->email = $request->get('email');
+        $user->save();
+        flash(User::all())->success();
     
-        // Mail delivery logic goes here
+        flash('Your message has been sent!')->success();
     
-        //flash('Your message has been sent!')->success();
-    
-        return redirect()->route('ticket.create');
+       return redirect()->route('ticket.create');
     }
 }
