@@ -111,7 +111,7 @@ class NovoController extends Controller
             );
           }
 
-          return $ticket_id;
+          return array('update' => $update, 'ticket_id' => $ticket_id);
         } else {
           $error = 'Não foi possível obter o pedido';
           throw new Exception($error);
@@ -124,8 +124,10 @@ class NovoController extends Controller
 
     $ret = '';
 
-    if (is_numeric($transaction)) {
-      $ret = view('novo', array('type' => 'success', 'msg' => 'Ticket ' . $transaction . ' cadastrado com sucesso!'));
+    if (is_array($transaction)) {
+      $cpl = ($transaction['update']) ? ' atualizado ' : ' cadastrado ';
+      $msg = 'Ticket ' . $transaction['ticket_id'] . $cpl . 'com sucesso!';
+      $ret = view('novo', array('type' => 'success', 'msg' => $msg));
     } else {
       $ret = view('novo', array('type' => 'danger', 'msg' => $transaction));
     }

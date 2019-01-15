@@ -36845,14 +36845,18 @@ var render = function() {
           _c("li", { staticClass: "list-group-item" }, [
             _vm._v(
               "Data: " +
-                _vm._s(_vm._f("moment")(_vm.ticket.created_at, "DD/MM/YYYY"))
+                _vm._s(
+                  _vm._f("moment")(_vm.ticket.created_at, "DD/MM/YYYY HH:mm:ss")
+                )
             )
           ]),
           _vm._v(" "),
           _c("li", { staticClass: "list-group-item" }, [
             _vm._v(
               "Atualização: " +
-                _vm._s(_vm._f("moment")(_vm.ticket.updated_at, "DD/MM/YYYY"))
+                _vm._s(
+                  _vm._f("moment")(_vm.ticket.updated_at, "DD/MM/YYYY HH:mm:ss")
+                )
             )
           ])
         ])
