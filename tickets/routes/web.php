@@ -23,3 +23,5 @@ Route::get('/novo', 'NovoController@index')->name('Novo');
 Route::get('/ticketsData','TicketsController@ticketsData');
 Route::get('/ticketData/{id}', 'TicketsController@ticketData');
 Route::get('/ticket/{id}', 'TicketsController@ticketView');
+
+Route::post('/salvarTicket', 'NovoController@saveData');

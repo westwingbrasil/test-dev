@@ -1964,7 +1964,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['url'],
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
+  }
+});
 
 /***/ }),
 
@@ -37057,96 +37065,129 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "col-auto" }, [
+    _c("form", { attrs: { action: _vm.url, method: "POST" } }, [
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrf }
+      }),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Cadastrar")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-auto" }, [
-      _c("form", [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-            _vm._v("Nome do cliente")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control is-invalid",
-            attrs: {
-              type: "text",
-              id: "formGroupExampleInput",
-              placeholder: "Nome",
-              required: ""
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
-            _vm._v("E-mail")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control is-invalid",
-            attrs: {
-              type: "email",
-              id: "formGroupExampleInput2",
-              placeholder: "E-mail",
-              required: ""
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
-            _vm._v("N° do pedido")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control is-invalid",
-            attrs: {
-              type: "number",
-              id: "formGroupExampleInput2",
-              placeholder: "Nº",
-              required: ""
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
-            _vm._v("Título do ticket")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control is-invalid",
-            attrs: {
-              type: "text",
-              id: "formGroupExampleInput2",
-              placeholder: "Título",
-              required: ""
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
-            _vm._v("Conteúdo do ticket")
-          ]),
-          _vm._v(" "),
-          _c("textarea", {
-            staticClass: "form-control is-invalid",
-            attrs: { placeholder: "Conteúdo", required: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "button" } },
-          [_vm._v("Cadastrar")]
-        )
-      ])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+        _vm._v("Nome do cliente")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "name",
+          id: "formGroupExampleInput",
+          placeholder: "Nome",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+        _vm._v("E-mail")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "email",
+          name: "email",
+          id: "formGroupExampleInput2",
+          placeholder: "E-mail",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+        _vm._v("N° do pedido")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "number",
+          name: "order_id",
+          id: "formGroupExampleInput2",
+          placeholder: "Nº",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+        _vm._v("Título do ticket")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "title",
+          id: "formGroupExampleInput2",
+          placeholder: "Título",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+        _vm._v("Conteúdo do ticket")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { name: "content", placeholder: "Conteúdo", required: "" }
+      })
     ])
   }
 ]
