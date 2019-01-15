@@ -24,7 +24,7 @@ class NovoController extends Controller
    */
   public function index()
   {
-    return view('novo');
+    return view('novo', array('type' => '', 'msg' => ''));
   }
 
   /**
