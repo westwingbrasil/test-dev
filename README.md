@@ -5,7 +5,7 @@ Desenvolver uma ferramenta simples de cadastro de tickets para o setor de atendi
 
 ## Requisitos:
 - Você deve fazer o fork desse projeto no seu repositório;
-- Utilizar o framework Laravel 5 com MySQL;
+- Utilizar: Docker, Laravel 5.x e MySQL;
 - Devem ser criadas migrations de 3 tabelas relacionadas;
 
 ## Escopo:
