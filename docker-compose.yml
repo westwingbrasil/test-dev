@@ -1,0 +1,27 @@
+version: '2'
+
+volumes:
+  mysql-data:
+    driver: local
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=tickets
+      - MYSQL_DATABASE=tickets
+      - MYSQL_USER=tickets
+      - MYSQL_PASSWORD=tickets
+  app:
+    image: ambientum/php:7.2-nginx
+    container_name: app
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8000:8080"
+    links:
+      - mysql

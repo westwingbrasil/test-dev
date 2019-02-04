@@ -1,0 +1,10 @@
+/vendor
+.env
+
+# IDE
+## Eclipse
+.buildpath
+.project
+.settings
+## PHPStorm
+.idea/
