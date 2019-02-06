@@ -32,6 +32,18 @@ class WestCliente implements ClienteInterface
     }
 
     /**
+     * Get data by column order by
+     * @param string $column
+     * @param string $order
+     * @param int $perPage
+     * @return mixed
+     */
+    public function getForDataTable(string $column, string $order, int $perPage)
+    {
+        return Cliente::orderBy($column, $order)->paginate($perPage);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param array $data

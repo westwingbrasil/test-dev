@@ -21,13 +21,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Layout
-Vue.component('west-app', require('layout/App.vue'));
-Vue.component('west-footer', require('layout/Footer.vue'));
-
-// Diretivas Vue
-import Mask from '../vue/diretivas/Mask.js';
-Vue.directive('vd-mask', Mask);
-
+Vue.component('data-table', require('./components/DataTable.vue').default);
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
