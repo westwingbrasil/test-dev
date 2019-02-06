@@ -12,7 +12,33 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+    /*
+    |--------------------------------------------------------------------------
+    | Cliente Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('getClients', 'ClienteController@getClients');
+    Route::get('getClient', 'ClienteController@getClientById');
+    Route::post('storeClient', 'ClienteController@storeClient');
+    Route::post('updateClient', 'ClienteController@updateClient');
+    Route::delete('destroyClient', 'ClienteController@destroyClient');
+    /*
+    |--------------------------------------------------------------------------
+    | Ticket Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('getTickets', 'TicketController@getTickets');
+    Route::get('getTicket', 'TicketController@getTicketById');
+    Route::post('storeTicket', 'TicketController@storeTicket');
+    Route::post('updateTicket', 'TicketController@updateTicket');
+    Route::delete('destroyTicket', 'TicketController@destroyTicket');
+    /*
+    |--------------------------------------------------------------------------
+    | Pedido Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('getPedidos', 'PedidoController@getPedidos');
+    Route::get('getPedido', 'PedidoController@getPedidoById');
+    Route::post('storePedido', 'PedidoController@storePedido');
+    Route::post('updatePedido', 'PedidoController@updatePedido');
+    Route::delete('destroyPedido', 'PedidoController@destroyPedido');
