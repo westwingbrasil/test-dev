@@ -32,6 +32,17 @@ class WestPedido implements PedidoInterface
     }
 
     /**
+     * Get data by filler
+     * @param string $filler
+     * @param string $value
+     * @return mixed
+     */
+    public function getByFiller(string $filler, string $value)
+    {
+        return Pedido::where($filler, $value)->first();
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param array $data
@@ -43,7 +54,7 @@ class WestPedido implements PedidoInterface
 
         $pedido->titulo = strtoupper($data['titulo']);
         $pedido->descricao = $data['descricao'];
-        $pedido->setCreatedAt(date('d/m/Y H:i:s'));
+        $pedido->setCreatedAt(date('Y-m-d H:i:s'));
 
         if($pedido->save()) {
             return 'Pedido ' . $data['titulo'] . ' criado com sucesso!';
@@ -65,7 +76,7 @@ class WestPedido implements PedidoInterface
 
         $pedido->titulo = strtoupper($data['titulo']);
         $pedido->descricao = $data['descricao'];
-        $pedido->setUpdatedAt(date('d/m/Y H:i:s'));
+        $pedido->setUpdatedAt(date('Y-m-d H:i:s'));
 
         if($pedido->save()) {
             return 'Pedido atualizado com sucesso!';

@@ -49,9 +49,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="num_ped">Número do Pedido</span>
                             </div>
-                            <select class="custom-select" required>
+                            <select class="custom-select" required v-model="ticket.pedido_id">
                                 <option disabled selected >Selecione...</option>
-                                <option v-for="item in pedidos" :value="item.id" v-model="ticket.pedido_id">{{item.id}} - {{ item.titulo }} - {{ item.descricao }}</option>
+                                <option v-for="item in pedidos" :value="item.id">{{ item.titulo }} - {{ item.descricao }}</option>
                             </select>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                   titulo: '',
                   descricao: ''
               },
-              pedidos: []
+              pedidos: [],
           }
         },
         methods: {
@@ -112,20 +112,17 @@
                axios.get(this.urlApi + 'getPedidos')
                    .then(({ data }) => {
                        this.pedidos = data.data;
-                   }).catch(error => this.tableData = [])
+                   }).catch(error => console.log(error.message))
             },
             setTicket(){
-                let dataBody = {
-                    pedido_id: this.ticket.pedido_id,
-                    cliente_nome: this.ticket.clienteNome,
-                    cliente_email: this.ticket.clienteEmail,
-                    titulo: this.ticket.titulo,
-                    descricao: this.ticket.descricao
-                };
-               axios.post(this.urlApi + 'storeTicket', {
-                   body: dataBody,
-                   headers: { 'Content-type': 'application/json' }
-               }).then(({ data }) => {
+                let urlTicket = this.urlApi + 'storeTicket'
+                                            + '?pedido_id=' + this.ticket.pedido_id
+                                            + '&cliente_nome=' + this.ticket.clienteNome
+                                            + '&cliente_email=' + this.ticket.clienteEmail
+                                            + '&titulo=' + this.ticket.titulo
+                                            + '&descricao=' + this.ticket.descricao;
+                console.log(urlTicket);
+               axios.get(urlTicket).then(({ data }) => {
                    console.log(data);
                        if(data.success){
                            this.limpaCampos();

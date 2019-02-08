@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ClienteFacade;
+use App\Facades\PedidoFacade;
 use App\Facades\TicketFacade;
 use Http\Client\Exception\HttpException;
 use Illuminate\Http\Request;
@@ -126,24 +127,38 @@ class TicketController extends Controller
                 'descricao' => $ticketDesc
             ];
 
-            if(ClienteFacade::getByEmail($ticketClienteEmail)) {
-                $tickets = TicketFacade::getByFiller();
-                if($tickets) {
-                    $arrayUpdateData = [
-                        'id' => $tickets->id,
-                        'pedido_id' => $ticketPedidoId,
-                        'titulo' => $ticketTitulo,
-                        'descricao' => $ticketDesc
-                    ];
+            $clientes = ClienteFacade::getByEmail($ticketClienteEmail);
 
-                    $updateTicket = TicketFacade::storeData($arrayUpdateData);
+            if($clientes) {
+                if(PedidoFacade::getByFiller('cliente_id', $clientes->id)) {
 
-                    if(strpos($updateTicket, 'Erro')) {
-                        return response()->json(['success' => false, 'error_messages' => $updateTicket],401);
+                    $tickets = TicketFacade::getByFiller('pedido_id', $ticketPedidoId);
+
+                    if($tickets) {
+                        $arrayUpdateData = [
+                            'id' => $tickets->id,
+                            'pedido_id' => $ticketPedidoId,
+                            'titulo' => $ticketTitulo,
+                            'descricao' => $ticketDesc
+                        ];
+
+                        $updateTicket = TicketFacade::storeData($arrayUpdateData);
+
+                        if(strpos($updateTicket, 'Erro')) {
+                            return response()->json(['success' => false, 'error_messages' => $updateTicket],401);
+                        }
+
+                        return response()->json(['success' => true, 'data' => $updateTicket],200);
+                    } else {
+                        $storeTicket = TicketFacade::storeData($arrayInsertData);
+
+                        if(strpos($storeTicket, 'Erro')) {
+                            return response()->json(['success' => false, 'error_messages' => $storeTicket],401);
+                        }
+
+                        return response()->json(['success' => true, 'data' => $storeTicket],200);
                     }
-
-                    return response()->json(['success' => true, 'data' => $updateTicket],200);
-                } else {
+                }  else {
                     $storeTicket = TicketFacade::storeData($arrayInsertData);
 
                     if(strpos($storeTicket, 'Erro')) {

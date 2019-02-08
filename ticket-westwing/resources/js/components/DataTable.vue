@@ -14,7 +14,7 @@
                         <span v-if="column === sortedColumn">
                             <i v-if="order === 'asc' " class="fas fa-arrow-up"></i>
                             <i v-else class="fas fa-arrow-down"></i>
-            </span>
+                        </span>
                     </th>
                 </tr>
                 </thead>
@@ -25,6 +25,9 @@
                 <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row" v-else>
                     <td>{{ serialNumber(key1) }}</td>
                     <td v-for="(value, key) in data">{{ value }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" @click="getTicket(data.numero_do_ticket)" data-toggle="modal" data-target="#modalDetails">View</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -44,6 +47,38 @@
                 <span style="margin-top: 8px;"> &nbsp; <i>Exibindo {{ pagination.data.length }} de {{ pagination.total }} tickets.</i></span>
             </ul>
         </nav>
+        <modal-details v-if="show" @close="show = false" title="Detalhes do Ticket">
+            <template slot="body">
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Pedido:</span>
+                            </div>
+                            <input type="text" class="form-control" v-model="pedidoTitle" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Título do ticket:</span>
+                            </div>
+                            <input type="text" class="form-control" v-model="tickets.titulo" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Conteúdo do ticket:</span>
+                            </div>
+                            <input type="text" class="form-control" v-model="tickets.descricao" disabled>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </modal-details>
     </div>
 </template>
 
@@ -57,6 +92,7 @@
             return {
                 tableData: [],
                 url: '',
+                urlApi: window.Laravel.apiBaseUri,
                 pagination: {
                     to: 1,
                     from: 1
@@ -68,7 +104,14 @@
                 sortedColumn: 'created_at',
                 order: 'asc',
                 searchs: [],
-                filterData: ''
+                filterData: '',
+                pedidoTitle: '',
+                pedidoDesc: '',
+                tickets: {
+                    titulo: '',
+                    descricao: ''
+                },
+                show: false
             }
         },
         watch: {
@@ -154,14 +197,22 @@
                 }
                 this.fetchData()
             },
-            // viewDetails(key,id) {
-            //     console.log(key,id);
-            //     let dataFetchUrl = window.Laravel.apiBaseUri + 'getTicket?id=' + id;
-            //     axios.get(dataFetchUrl)
-            //         .then(({ data }) => {
-            //             console.log(data);
-            //         }).catch(error => this.tableData = [])
-            // }
+            getTicket(id) {
+                axios.get(this.urlApi + 'getTicket?id=' + id)
+                    .then(({ data }) => {
+                        console.log(data.data.titulo);
+                        this.tickets.titulo = data.data.titulo;
+                        this.tickets.descricao = data.data.descricao;
+                        this.getPedidoById(data.data.pedido_id);
+                        this.show = true;
+                    }).catch(error => console.log(error.message))
+            },
+            getPedidoById(id){
+                axios.get(this.urlApi + 'getPedido?id=' + id)
+                    .then(({ data }) => {
+                        this.pedidoTitle = data.data.titulo + ' - ' + data.data.descricao;
+                    }).catch(error => console.log(error.message))
+            }
         },
         filters: {
             columnHead(value) {

@@ -22,6 +22,14 @@ interface PedidoInterface
     public function getById(int $id);
 
     /**
+     * Get data by filler
+     * @param string $filler
+     * @param string $value
+     * @return mixed
+     */
+    public function getByFiller(string $filler, string $value);
+
+    /**
      * Insert a new recover to model
      * @param array $data
      * @return mixed

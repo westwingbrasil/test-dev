@@ -78,7 +78,7 @@ class WestTicket implements TicketInterface
         $ticket->pedido_id = $data['pedido_id'];
         $ticket->titulo = strtoupper($data['titulo']);
         $ticket->descricao = $data['descricao'];
-        $ticket->setCreatedAt(date('d/m/Y H:i:s'));
+        $ticket->setCreatedAt(date('Y-m-d H:i:s'));
 
         if($ticket->save()) {
             return 'Ticket ' . $data['titulo'] . ' criado com sucesso!';
@@ -100,7 +100,7 @@ class WestTicket implements TicketInterface
 
         $ticket->titulo = strtoupper($data['titulo']);
         $ticket->descricao = $data['descricao'];
-        $ticket->setUpdatedAt(date('d/m/Y H:i:s'));
+        $ticket->setUpdatedAt(date('Y-m-d H:i:s'));
 
         if($ticket->save()) {
             return 'Ticket atualizado com sucesso!';

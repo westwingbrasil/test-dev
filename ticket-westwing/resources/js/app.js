@@ -23,6 +23,7 @@ window.Vue = require('vue');
 // Layout
 Vue.component('data-table', require('./components/DataTable.vue').default);
 Vue.component('modal', require('./components/Modal.vue').default);
+Vue.component('modal-details', require('./components/ModalDetails.vue').default);
 Vue.component('west-app', require('./components/WestApp.vue').default);
 
 import VueTheMask from 'vue-the-mask';

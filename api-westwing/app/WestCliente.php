@@ -68,7 +68,7 @@ class WestCliente implements ClienteInterface
 
             $client->nome = strtoupper($data['nome']);
             $client->email = $data['email'];
-            $client->setCreatedAt(date('d/m/Y H:i:s'));
+            $client->setCreatedAt(date('Y-m-d H:i:s'));
 
             if($client->save()) {
                 return 'Cliente ' . $data['nome'] . ' criado com sucesso!';
@@ -93,7 +93,7 @@ class WestCliente implements ClienteInterface
         $client = Cliente::find($data['id']);
 
         $client->nome = strtoupper($data['nome']);
-        $client->setUpdatedAt(date('d/m/Y H:i:s'));
+        $client->setUpdatedAt(date('Y-m-d H:i:s'));
 
         if($client->save()) {
             return 'Cliente atualizado com sucesso!';
