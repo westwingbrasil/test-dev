@@ -21,7 +21,7 @@ class WestCliente implements ClienteInterface
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource by Id.
      *
      * @param  int $id
      * @return \Illuminate\Support\Collection
@@ -29,6 +29,17 @@ class WestCliente implements ClienteInterface
     public function getById(int $id)
     {
         return Cliente::find($id);
+    }
+
+    /**
+     * Display the specified resource by email.
+     *
+     * @param  string $email
+     * @return \Illuminate\Support\Collection
+     */
+    public function getByEmail(string $email)
+    {
+        return Cliente::where('email', $email)->first();
     }
 
     /**
@@ -66,7 +77,7 @@ class WestCliente implements ClienteInterface
             }
 
         } else {
-            return 'Email inserido já existente! Corrija e tente novamente!';
+            return 'Erro: Email inserido já existente! Corrija e tente novamente!';
         }
     }
 

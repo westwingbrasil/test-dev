@@ -22,8 +22,14 @@ window.Vue = require('vue');
 
 // Layout
 Vue.component('data-table', require('./components/DataTable.vue').default);
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('modal', require('./components/Modal.vue').default);
+Vue.component('west-app', require('./components/WestApp.vue').default);
 
+import VueTheMask from 'vue-the-mask';
+Vue.use(VueTheMask);
+
+import FlashMessage from '@smartweb/vue-flash-message';
+Vue.use(FlashMessage);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

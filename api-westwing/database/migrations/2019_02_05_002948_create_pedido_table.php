@@ -15,9 +15,12 @@ class CreatePedidoTable extends Migration
     {
         Schema::create('pedido', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('cliente_id')->unsigned();
             $table->string('titulo', 250);
             $table->string('descricao', 255)->nullable();
             $table->timestamps();
+
+            $table->foreign('cliente_id')->references('id')->on('cliente')->onDelete('cascade');
         });
     }
 

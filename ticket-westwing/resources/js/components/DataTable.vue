@@ -1,5 +1,8 @@
 <template>
     <div class="data-table">
+        <div class="well">
+            <input type="text" class="form-control" placeholder="Digite para filtrar" v-model="filterData">
+        </div>
         <div class="main-table">
             <table class="table">
                 <thead>
@@ -29,16 +32,16 @@
         <nav v-if="pagination && tableData.length > 0">
             <ul class="pagination">
                 <li class="page-item" :class="{'disabled' : currentPage === 1}">
-                    <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)">Previous</a>
+                    <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)">Anterior</a>
                 </li>
                 <li v-for="page in pagesNumber" class="page-item"
-                    :class="{'active': page == pagination.meta.current_page}">
+                    :class="{'active': page === pagination.current_page}">
                     <a href="javascript:void(0)" @click.prevent="changePage(page)" class="page-link">{{ page }}</a>
                 </li>
-                <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page }">
-                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
+                <li class="page-item" :class="{'disabled': currentPage === pagination.last_page }">
+                    <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Próximo</a>
                 </li>
-                <span style="margin-top: 8px;"> &nbsp; <i>Displaying {{ pagination.data.length }} of {{ pagination.meta.total }} entries.</i></span>
+                <span style="margin-top: 8px;"> &nbsp; <i>Exibindo {{ pagination.data.length }} de {{ pagination.total }} tickets.</i></span>
             </ul>
         </nav>
     </div>
@@ -55,13 +58,17 @@
                 tableData: [],
                 url: '',
                 pagination: {
-                    meta: { to: 1, from: 1 }
+                    to: 1,
+                    from: 1
                 },
                 offset: 4,
+                search: '',
                 currentPage: 1,
                 perPage: 5,
-                sortedColumn: this.columns[0],
-                order: 'asc'
+                sortedColumn: 'created_at',
+                order: 'asc',
+                searchs: [],
+                filterData: ''
             }
         },
         watch: {
@@ -80,16 +87,16 @@
              * Get the pages number array for displaying in the pagination.
              * */
             pagesNumber() {
-                if (!this.pagination.meta.to) {
+                if (!this.pagination.to) {
                     return []
                 }
-                let from = this.pagination.meta.current_page - this.offset
+                let from = this.pagination.current_page - this.offset
                 if (from < 1) {
                     from = 1
                 }
                 let to = from + (this.offset * 2)
-                if (to >= this.pagination.meta.last_page) {
-                    to = this.pagination.meta.last_page
+                if (to >= this.pagination.last_page) {
+                    to = this.pagination.last_page
                 }
                 let pagesArray = []
                 for (let page = from; page <= to; page++) {
@@ -101,7 +108,14 @@
              * Get the total data displayed in the current page.
              * */
             totalData() {
-                return (this.pagination.meta.to - this.pagination.meta.from) + 1
+                return (this.pagination.to - this.pagination.from) + 1
+            },
+
+            data() {
+                var self = this;
+                return this.searchs.filterData(function (item) {
+                    return item.indexOf(self.filterData) > -1;
+                })
             }
         },
         methods: {
@@ -109,8 +123,8 @@
                 let dataFetchUrl = `${this.url}?page=${this.currentPage}&column=${this.sortedColumn}&order=${this.order}&per_page=${this.perPage}`
                 axios.get(dataFetchUrl)
                     .then(({ data }) => {
-                        this.pagination = data
-                        this.tableData = data.data
+                        this.pagination = data.data;
+                        this.tableData = data.data.data;
                     }).catch(error => this.tableData = [])
             },
             /**
@@ -139,7 +153,15 @@
                     this.order = 'asc'
                 }
                 this.fetchData()
-            }
+            },
+            // viewDetails(key,id) {
+            //     console.log(key,id);
+            //     let dataFetchUrl = window.Laravel.apiBaseUri + 'getTicket?id=' + id;
+            //     axios.get(dataFetchUrl)
+            //         .then(({ data }) => {
+            //             console.log(data);
+            //         }).catch(error => this.tableData = [])
+            // }
         },
         filters: {
             columnHead(value) {

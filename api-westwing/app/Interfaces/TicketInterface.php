@@ -22,6 +22,23 @@ interface TicketInterface
     public function getById(int $id);
 
     /**
+     * Get data by filler
+     * @param string $filler
+     * @param string $value
+     * @return mixed
+     */
+    public function getByFiller(string $filler, string $value);
+
+    /**
+     * Get data by column order by
+     * @param string $column
+     * @param string $order
+     * @param int $perPage
+     * @return mixed
+     */
+    public function getForDataTable(string $column, string $order, int $perPage);
+
+    /**
      * Insert a new recover to model
      * @param array $data
      * @return mixed

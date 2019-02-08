@@ -22,6 +22,13 @@ interface ClienteInterface
     public function getById(int $id);
 
     /**
+     * Get data by email
+     * @param string $email
+     * @return mixed
+     */
+    public function getByEmail(string $email);
+
+    /**
      * Get data by column order by
      * @param string $column
      * @param string $order

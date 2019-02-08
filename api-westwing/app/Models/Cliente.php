@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  * @version Fevereiro 04, 2019, 3:29 pm UTC
  *
+ * @property \App\Models\ClientePedido clientePedidos
  * @property \App\Models\Pedido pedidos
  * @property string nome
  * @property string email

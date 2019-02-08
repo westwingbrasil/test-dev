@@ -2,6 +2,7 @@
 namespace App;
 
 use App\Interfaces\TicketInterface;
+use App\Models\Pedido;
 use App\Models\Ticket;
 
 /**
@@ -29,6 +30,39 @@ class WestTicket implements TicketInterface
     public function getById(int $id)
     {
         return Ticket::find($id);
+    }
+
+    /**
+     * Get data by filler
+     * @param string $filler
+     * @param string $value
+     * @return mixed
+     */
+    public function getByFiller(string $filler, string $value)
+    {
+        return Ticket::where($filler, $value)->first();
+    }
+
+    /**
+     * Get data by column order by
+     * @param string $column
+     * @param string $order
+     * @param int $perPage
+     * @return mixed
+     */
+    public function getForDataTable(string $column, string $order, int $perPage)
+    {
+        $tickets = Pedido::join('ticket', 'pedido.id', '=', 'ticket.pedido_id')
+            ->join('cliente', 'cliente.id', '=', 'pedido.cliente_id')
+            ->select('ticket.id AS numero_do_ticket',
+                     'pedido.id AS numero_do_pedido',
+                     'pedido.titulo AS titulo_do_pedido',
+                     'cliente.email AS email_do_cliente',
+                     'ticket.created_at AS data_criacao_ticket'
+           )->orderBy('ticket.'.$column, $order)
+            ->paginate($perPage);
+
+        return $tickets;
     }
 
     /**

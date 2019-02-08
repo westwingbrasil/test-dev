@@ -23,9 +23,9 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div id="app">
-                    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"></nav>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light"></nav>
                     <br>
-                    <example-component></example-component>
+                    <west-app></west-app>
                 </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property \App\Models\Ticket ticket
  * @property \App\Models\Cliente cliente
+ * @property integer cliente_id
  * @property string titulo
  * @property string descricao
  */
@@ -25,6 +26,7 @@ class Pedido extends Model
     protected $primaryKey = 'id';
 
     public $fillable = [
+        'cliente_id',
         'titulo',
         'descricao',
     ];
@@ -36,6 +38,7 @@ class Pedido extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'cliente_id' => 'integer',
         'titulo' => 'string',
         'descricao' => 'string',
     ];

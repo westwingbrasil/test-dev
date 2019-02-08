@@ -29,6 +29,7 @@ use Illuminate\Http\Request;
     */
     Route::get('getTickets', 'TicketController@getTickets');
     Route::get('getTicket', 'TicketController@getTicketById');
+    Route::get('getFilteredData', 'TicketController@getFilteredData');
     Route::post('storeTicket', 'TicketController@storeTicket');
     Route::post('updateTicket', 'TicketController@updateTicket');
     Route::delete('destroyTicket', 'TicketController@destroyTicket');
