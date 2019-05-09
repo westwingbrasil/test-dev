@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Ticket;
 use Illuminate\Http\Request;
+use App\Ticket;
 use App\Repositories\TicketRepository;
+use App\Repositories\ClientRepository;
+use App\Repositories\OrderRepository;
 
 class TicketController extends Controller
 {
@@ -40,6 +42,7 @@ class TicketController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Repositories\TicketRepository  $ticket
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,8 +55,15 @@ class TicketController extends Controller
             'content' => 'required',
         ]);
 
-        //$ticket = new TicketRepository();
-        $this->ticket->create($request);
+        $client =  new ClientRepository;
+        $ticket =  new TicketRepository;
+        $order =  new OrderRepository;
+
+        $ticket->create($client, $order, $request);
+
+        if (!Ticket::createTicket($request))
+            return redirect()->route('tickets.create')
+                ->with('error', 'Código do pedido já cadatrado para outro cliente');
 
         return redirect()->route('ticket.store')
             ->with('success', 'Ticket created successfully.');

@@ -2,9 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Repositories\ClientRepository;
-use App\Repositories\OrderRepository;
-
 class TicketRepository //implements CreateRepositoryInterface
 {
     /**
@@ -12,11 +9,17 @@ class TicketRepository //implements CreateRepositoryInterface
      *
      * @param array
      */
-    public function create(\Illuminate\Http\Request $request): int
+    public function create(ClientRepository $client, OrderRepository $order, \Illuminate\Http\Request $request): int
     {
-        $client_id = (new ClientRepository)->create($request);
+        $client_id = $client->create(
+            array('email' => $request->get('email_client')),
+            array('name' => $request->get('name_client'))
+        );
 
-        $order_id = (new OrderRepository)->create($request);
+        $order_id = $order->create(
+            array('code' => $request->get('code'), 'client_id' => $client_id),
+            array()
+        );
 
         $ticket = App\Ticket::updateOrCreate(
             ['client_id' => $client_id, 'order_id' => $order_id],
