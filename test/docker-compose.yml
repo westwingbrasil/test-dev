@@ -21,7 +21,7 @@ services:
 
   # PHP
   app:
-    image: ambientum/php:7.1-caddy
+    image: ambientum/php:7.1-apache
     container_name: test-app
     volumes:
       - .:/var/www/app
