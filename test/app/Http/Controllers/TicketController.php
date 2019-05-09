@@ -4,20 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
-use App\Repositories\TicketRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\OrderRepository;
+use App\Repositories\TicketRepository;
 
 class TicketController extends Controller
 {
-    protected $ticket;
-
-    public function __construct(TicketRepository $ticket)
-    {
-        $this->ticket = $ticket;
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +34,6 @@ class TicketController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Repositories\TicketRepository  $ticket
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -55,11 +46,24 @@ class TicketController extends Controller
             'content' => 'required',
         ]);
 
-        $client =  new ClientRepository;
-        $ticket =  new TicketRepository;
-        $order =  new OrderRepository;
 
-        $ticket->create($client, $order, $request);
+        $client = (new ClientRepository());
+        $client_id = $client->create(
+            array('email' => $request->get('email_client')),
+            array('name' => $request->get('name_client'))
+        );
+
+        $order = new OrderRepository;
+        $order_id = $order->create(
+            array('code' => $request->get('code'), 'client_id' => $client_id),
+            array()
+        );
+
+        $ticket =  new TicketRepository;
+        $created = $ticket->create(
+            array('client_id' => $client_id, 'order_id' => $order_id),
+            array('title' => $request->get('title'), 'content' => $request->get('content'))
+        );
 
         if (!Ticket::createTicket($request))
             return redirect()->route('tickets.create')

@@ -4,7 +4,6 @@ use App\Repositories\RepositoryInterface;
 
 abstract class Repository implements RepositoryInterface
 {
-
     protected $modelClassName;
 
     public function create(array $filters, array $attributes)
@@ -13,5 +12,10 @@ abstract class Repository implements RepositoryInterface
             return call_user_func_array("{$this->modelClassName}::firstOrCreate", array($filters));
         else
             return call_user_func_array("{$this->modelClassName}::firstOrCreate", array($filters), array($attributes));
+    }
+
+    public function update(array $filters, array $attributes)
+    {
+        return call_user_func_array("{$this->modelClassName}::updateOrCreate", array($filters), array($attributes));
     }
 }

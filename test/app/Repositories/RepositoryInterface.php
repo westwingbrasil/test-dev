@@ -10,4 +10,11 @@ interface RepositoryInterface
      * @param array
      */
     public function create(array $filters, array $attributes);
+
+    /**
+     * update.
+     *
+     * @param array
+     */
+    public function update(array $filters, array $attributes);
 }
