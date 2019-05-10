@@ -11,11 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/tickets');
 
-//Route::resource('tickets', 'TicketController');
 Route::any('tickets/report', 'TicketController@search')->name('tickets.report');
 Route::any('tickets/create', 'TicketController@create')->name('tickets.create');
 Route::any('tickets', 'TicketController@index')->name('tickets.index');
