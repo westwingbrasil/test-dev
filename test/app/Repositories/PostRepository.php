@@ -28,6 +28,6 @@ class PostRepository implements RepositoryInterface
 
     public function update(array $filters, array $attributes)
     {
-        call_user_func_array("{$this->modelClassName}::updateOrCreate", array($filters), array($attributes));
+        call_user_func_array("{$this->modelClassName}::updateOrCreate", array($filters, $attributes));
     }
 }

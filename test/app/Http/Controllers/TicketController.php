@@ -53,7 +53,7 @@ class TicketController extends Controller
     {
         $request->validate([
             'client_name' => 'required',
-            'email_client' => 'required',
+            'client_email' => 'required',
             'order_code' => 'required',
             'title' => 'required',
             'content' => 'required',
@@ -61,14 +61,14 @@ class TicketController extends Controller
 
 
         $this->repo->setModelClassName('App\\Client');
-        $client = $this->repo->create(
-            ['email' => $request->get('email_client')],
-            ['name' => $request->get('name_client')]
+        $client_id = $this->repo->create(
+            ['email' => $request->get('client_email')],
+            ['name' => $request->get('client_name')]
         );
 
         $this->repo->setModelClassName('App\\Order');
-        $order = $this->repo->create(
-            array('code' => $request->get('code'), 'client_id' => $client->id),
+        $order_id = $this->repo->create(
+            array('code' => $request->get('order_code'), 'client_id' => $client_id),
             array()
         );
 
@@ -80,7 +80,7 @@ class TicketController extends Controller
 
         $this->repo->setModelClassName('App\\Ticket');
         $this->repo->update(
-            array('client_id' => $client->id, 'order_id' => $order->id),
+            array('client_id' => $client_id, 'order_id' => $order_id),
             array('title' => $request->get('title'), 'content' => $request->get('content'))
         );
 
