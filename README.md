@@ -43,3 +43,8 @@ Desenvolver uma ferramenta simples de cadastro de tickets para o setor de atendi
 		- E-mail do cliente;
 		- Data de criação do ticket;
 - Criar tela de visualização de detalhe do ticket com todos os campos da tabela de tickets
+
+# Teste PHP Fabio
+
+## Iniciar projeto:
+- Para rodar a aplicação, rode o comando docker-compose up na raíz do projeto

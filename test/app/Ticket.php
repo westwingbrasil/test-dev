@@ -12,6 +12,8 @@ class Ticket extends Model
     public function search(array $filter, $totalPages)
     {
         $tickets = $this
+            ->join('clients', 'tickets.client_id', '=', 'clients.id')
+            ->join('orders', 'tickets.order_id', '=', 'orders.id')
             ->where(function ($query) use ($filter) {
                 if (isset($filter['order_code']))
                     $query->where('code', $filter['order_code']);
