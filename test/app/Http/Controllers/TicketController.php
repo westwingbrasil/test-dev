@@ -106,12 +106,9 @@ class TicketController extends Controller
      * @param  \App\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public function show($id)
     {
-        $ticket = Ticket::find($ticket->id)
-            ->join('clients', 'tickets.client_id', '=', 'clients.id')
-            ->join('orders', 'tickets.order_id', '=', 'orders.id')->first();
-
+        $ticket = Ticket::find($id);
         return view('tickets.show', compact('ticket'));
     }
 }
