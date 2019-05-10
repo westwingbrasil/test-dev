@@ -21,7 +21,16 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('tickets.index');
+        $tickets = Ticket::orderBy('tickets.created_at', 'desc')
+            ->join('clients', 'tickets.client_id', '=', 'clients.id')
+            ->join('orders', 'tickets.order_id', '=', 'orders.id')
+            ->paginate(5);
+
+        return view('tickets.index', compact('tickets'))
+            ->with('i', (request()->input(
+                'page',
+                1
+            ) - 1) * 5);
     }
 
     /**
