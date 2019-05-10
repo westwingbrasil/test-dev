@@ -65,6 +65,17 @@
             </a>
         </header>
         <div class="container">
+              
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success text-center">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
+            @if ($message = Session::get('error'))
+                <div class="alert alert-danger text-center">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
             @yield('content')
         </div>
     
