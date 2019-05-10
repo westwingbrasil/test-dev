@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
+use App\Order;
 use App\Repositories\RepositoryInterface;
 
 class TicketController extends Controller
@@ -66,17 +67,19 @@ class TicketController extends Controller
             ['name' => $request->get('client_name')]
         );
 
+        //Validation - if have ticket with same order code to outher client
+        $count = Order::where('code',  $request->get('order_code'))->where('client_id', '<>', $client_id)->count();
+
+        if ($count != 0) {
+            return redirect()->route('tickets.create')
+                ->with('error', 'Código do pedido já cadatrado para outro cliente');
+        }
+
         $this->repo->setModelClassName('App\\Order');
         $order_id = $this->repo->create(
             array('code' => $request->get('order_code'), 'client_id' => $client_id),
             array()
         );
-
-        //Validation - if have ticket with same order code to outher client
-        // if (!Ticket::createTicket($request)) {
-        //     return redirect()->route('tickets.create')
-        //         ->with('error', 'Código do pedido já cadatrado para outro cliente');
-        // }
 
         $this->repo->setModelClassName('App\\Ticket');
         $this->repo->update(
@@ -85,8 +88,8 @@ class TicketController extends Controller
         );
 
 
-        return redirect()->route('tickets.store')
-            ->with('success', 'Ticket created successfully.');
+        return redirect()->route('tickets.create')
+            ->with('success', 'Ticket criado com sucesso.');
     }
 
     /**

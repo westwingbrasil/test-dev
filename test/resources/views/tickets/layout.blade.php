@@ -78,6 +78,11 @@
             @endif
             @yield('content')
         </div>
-    
+        
+        <footer class="bd-footer text-muted bg-light mt-4">
+            <div class="container-fluid p-md-4">
+                <p>Teste de desenvolvimento</p>
+            </div>
+        </footer>
     </body>
 </html>
