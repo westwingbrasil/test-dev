@@ -85,32 +85,22 @@ class TicketController extends Controller
         );
 
 
-        return redirect()->route('ticket.store')
+        return redirect()->route('tickets.store')
             ->with('success', 'Ticket created successfully.');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function report(Request $request)
-    {
-        $tickets = Ticket::latest()->paginate(5);
-
-        return view('tickets.report', compact('tickets'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
-
-    /**
-     * Display the specified resource.
+     * Show Ticket
      *
      * @param  \App\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
     public function show(Ticket $ticket)
     {
+        $ticket = Ticket::find($ticket->id)
+            ->join('clients', 'tickets.client_id', '=', 'clients.id')
+            ->join('orders', 'tickets.order_id', '=', 'orders.id')->first();
+
         return view('tickets.show', compact('ticket'));
     }
 }
