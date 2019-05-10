@@ -10,6 +10,7 @@ use App\Repositories\RepositoryInterface;
 class TicketController extends Controller
 {
     protected $repo;
+    public $totalPage = 5;
 
     public function __construct(RepositoryInterface $repo)
     {
@@ -20,18 +21,25 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Ticket $ticket)
     {
-        $tickets = Ticket::orderBy('tickets.created_at', 'desc')
-            ->join('clients', 'tickets.client_id', '=', 'clients.id')
-            ->join('orders', 'tickets.order_id', '=', 'orders.id')
-            ->paginate(5);
+        $tickets = $ticket->all();
 
-        return view('tickets.index', compact('tickets'))
-            ->with('i', (request()->input(
-                'page',
-                1
-            ) - 1) * 5);
+        return view('tickets.index', compact('tickets'));
+    }
+
+    /**
+     * Report tickets.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request, Ticket $ticket)
+    {
+        $params = $request->except('_token');
+
+        $tickets = $ticket->search($params, $this->totalPage);
+
+        return view('tickets.search', compact('tickets', 'params'));
     }
 
     /**
