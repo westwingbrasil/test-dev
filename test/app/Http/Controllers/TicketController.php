@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
-use App\Repositories\ClientRepository;
-use App\Repositories\OrderRepository;
-use App\Repositories\TicketRepository;
+use App\Repositories\RepositoryInterface;
 
 class TicketController extends Controller
 {
+    protected $repo;
+
+    public function __construct(RepositoryInterface $repo)
+    {
+        $this->repo = $repo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,27 +51,30 @@ class TicketController extends Controller
         ]);
 
 
-        $client = (new ClientRepository());
-        $client_id = $client->create(
+        $this->repo->setModelClassName('App\\Client');
+        $client = $this->repo->create(
             array('email' => $request->get('email_client')),
             array('name' => $request->get('name_client'))
         );
 
-        $order = new OrderRepository;
-        $order_id = $order->create(
-            array('code' => $request->get('code'), 'client_id' => $client_id),
+        $this->repo->setModelClassName('App\\Order');
+        $order = $this->repo->create(
+            array('code' => $request->get('code'), 'client_id' => $client->id),
             array()
         );
 
-        $ticket =  new TicketRepository;
-        $created = $ticket->create(
-            array('client_id' => $client_id, 'order_id' => $order_id),
+        //Validation - if have ticket with same order code to outher client
+        // if (!Ticket::createTicket($request)) {
+        //     return redirect()->route('tickets.create')
+        //         ->with('error', 'Código do pedido já cadatrado para outro cliente');
+        // }
+
+        $this->repo->setModelClassName('App\\Ticket');
+        $this->repo->update(
+            array('client_id' => $client->id, 'order_id' => $order->id),
             array('title' => $request->get('title'), 'content' => $request->get('content'))
         );
 
-        if (!Ticket::createTicket($request))
-            return redirect()->route('tickets.create')
-                ->with('error', 'Código do pedido já cadatrado para outro cliente');
 
         return redirect()->route('ticket.store')
             ->with('success', 'Ticket created successfully.');
