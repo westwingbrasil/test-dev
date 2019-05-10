@@ -1,12 +1,7 @@
 @extends('tickets.layout')
   
 @section('content')
-<div class="row">
-    <div class="col-lg-12 col-sm-12 col-md-12 mt-2" >
-        <div class=" float-right">
-            <a class="btn btn-info" href="{{ route('tickets.index') }}"> Relatório de tickets</a>
-        </div>
-    </div>
+<div class="row mt-3">
     <div class="col-lg-12 col-sm-12 col-md-12 margin-tb flex-center">
         <div>
             <h2>Adicionar Ticket</h2>

@@ -15,24 +15,10 @@
                 margin: 0;
             }
 
-            .full-height {
-                height: 100vh;
-            }
-
             .flex-center {
                 align-items: center;
                 display: flex;
                 justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
             }
 
             .content {
@@ -43,26 +29,33 @@
                 font-size: 84px;
             }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+            .nav-item{
+                padding: 0 10px;
 
-            .m-b-md {
-                margin-bottom: 30px;
             }
         </style>
     </head>
     <body>
-        <header class="navbar bg-info">
+        <header class="navbar bg-info text-light">
             <a class="navbar-brand mr-0 mr-md-2 mt-2 text-light" href="/" aria-label="Tickets">
                 Tickets
             </a>
+            <div class="navbar-nav-scroll">
+                <ul class="navbar-nav bd-navbar-nav flex-row">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('tickets.create') }}">Cadastrar tickets</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('tickets.index') }}">Lista de tickets</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('tickets.report') }}">Relatório de tickets</a>
+                    </li>
+                    
+                </ul>
+            </div>
         </header>
         <div class="container">
               
