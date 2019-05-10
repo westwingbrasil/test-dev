@@ -21,7 +21,7 @@ class PostRepository implements RepositoryInterface
         if (empty($attributes)) {
             $result = call_user_func_array("{$this->modelClassName}::firstOrCreate", array($filters));
         } else {
-            $result = call_user_func_array("{$this->modelClassName}::firstOrCreate", array($filters), array($attributes));
+            $result = call_user_func_array("{$this->modelClassName}::firstOrCreate", array($filters, $attributes));
         }
         return $result->id;
     }

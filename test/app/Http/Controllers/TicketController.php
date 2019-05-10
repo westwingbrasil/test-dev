@@ -53,8 +53,8 @@ class TicketController extends Controller
 
         $this->repo->setModelClassName('App\\Client');
         $client = $this->repo->create(
-            array('email' => $request->get('email_client')),
-            array('name' => $request->get('name_client'))
+            ['email' => $request->get('email_client')],
+            ['name' => $request->get('name_client')]
         );
 
         $this->repo->setModelClassName('App\\Order');
