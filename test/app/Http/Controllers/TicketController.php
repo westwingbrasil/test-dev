@@ -2,28 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Ticket;
 use Illuminate\Http\Request;
-use App\Repositories\TicketRepository;
+use App\Ticket;
+use App\Order;
+use App\Repositories\RepositoryInterface;
 
 class TicketController extends Controller
 {
-    protected $ticket;
+    protected $repo;
+    public $totalPage = 5;
 
-    public function __construct(TicketRepository $ticket)
+    public function __construct(RepositoryInterface $repo)
     {
-        $this->ticket = $ticket;
+        $this->repo = $repo;
     }
-
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Ticket $ticket)
     {
-        return view('tickets.index');
+        $tickets = $ticket->all();
+
+        return view('tickets.index', compact('tickets'));
+    }
+
+    /**
+     * Report tickets.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request, Ticket $ticket)
+    {
+        $params = $request->except('_token');
+
+        $tickets = $ticket->search($params, $this->totalPage);
+
+        return view('tickets.search', compact('tickets', 'params'));
     }
 
     /**
@@ -46,41 +62,53 @@ class TicketController extends Controller
     {
         $request->validate([
             'client_name' => 'required',
-            'email_client' => 'required',
+            'client_email' => 'required',
             'order_code' => 'required',
             'title' => 'required',
             'content' => 'required',
         ]);
 
-        //$ticket = new TicketRepository();
-        $this->ticket->create($request);
 
-        return redirect()->route('ticket.store')
-            ->with('success', 'Ticket created successfully.');
+        $this->repo->setModelClassName('App\\Client');
+        $client_id = $this->repo->create(
+            ['email' => $request->get('client_email')],
+            ['name' => $request->get('client_name')]
+        );
+
+        //Validation - if have ticket with same order code to outher client
+        $count = Order::where('code',  $request->get('order_code'))->where('client_id', '<>', $client_id)->count();
+
+        if ($count != 0) {
+            return redirect()->route('tickets.create')
+                ->with('error', 'Código do pedido já cadatrado para outro cliente');
+        }
+
+        $this->repo->setModelClassName('App\\Order');
+        $order_id = $this->repo->create(
+            array('code' => $request->get('order_code'), 'client_id' => $client_id),
+            array()
+        );
+
+        $this->repo->setModelClassName('App\\Ticket');
+        $this->repo->update(
+            array('client_id' => $client_id, 'order_id' => $order_id),
+            array('title' => $request->get('title'), 'content' => $request->get('content'))
+        );
+
+
+        return redirect()->route('tickets.create')
+            ->with('success', 'Ticket criado com sucesso.');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function report(Request $request)
-    {
-        $tickets = Ticket::latest()->paginate(5);
-
-        return view('tickets.report', compact('tickets'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
-
-    /**
-     * Display the specified resource.
+     * Show Ticket
      *
      * @param  \App\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public function show($id)
     {
+        $ticket = Ticket::find($id);
         return view('tickets.show', compact('ticket'));
     }
 }

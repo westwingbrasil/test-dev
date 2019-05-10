@@ -1,9 +1,11 @@
 @extends('tickets.layout')
   
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb flex-center mt-3">
+<div class="row mt-3">
+    <div class="col-lg-12 col-sm-12 col-md-12 margin-tb flex-center">
+        <div>
             <h2>Adicionar Ticket</h2>
+        </div>
     </div>
 </div>
    
@@ -29,8 +31,8 @@
             </div>
         
             <div class="form-group">
-                <label for="email_client">Email do Cliente:</label>
-                <input class="form-control" name="email_client" placeholder="Email do Cliente" type="email" required/>
+                <label for="client_email">Email do Cliente:</label>
+                <input class="form-control" name="client_email" placeholder="Email do Cliente" type="email" required/>
             </div>
         
             <div class="form-group">
@@ -44,7 +46,7 @@
             </div>
         
             <div class="form-group">
-                <label for="client_name">Conteúdo do Ticket:</label>
+                <label for="content">Conteúdo do Ticket:</label>
                 <textarea class="form-control" style="height:150px" name="content" placeholder="Conteúdo do Ticket" required></textarea>
             </div>
         </div>
