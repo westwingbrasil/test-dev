@@ -6,8 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install selected extensions and other stuff
 RUN apt-get update \
-    && apt-get install npm \
-    && apt-get install composer \
+    && apt-get -y install npm \
+    && apt-get -y install composer \
     && apt-get -y --no-install-recommends install  php7.3-mysql php-redis \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
