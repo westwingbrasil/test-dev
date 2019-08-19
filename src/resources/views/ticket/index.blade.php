@@ -15,8 +15,25 @@
                         <div class="row justify-content-between mb-20">
 
 
-                            <div class="col-md-8">
+                            <div class="col-md-10">
+                                <form class="form-inline" action="{{ route('tickets.filter') }}" method="POST">
+                                    {!! csrf_field() !!}
+                                    <div class="form-row col-md-12">
+                                        <label class="mr-20  col-md-1"> Email: </label>
+                                        <div class="form-group col-md-3">
+                                            <input type="text" name="customerEmail" class="form-control" placeholder="E-mail" value="@if(isset($filterData)){{$filterData->customerEmail}}@endif">
+                                        </div>
+                                        <label class="mr-20 col-md-1"> Order #: </label>
+                                        <div class="form-group col-md-3">
 
+                                            <input type="text" name="orderNumber" class="form-control" value="@if(isset($filterData)){{$filterData->orderNumber}}@endif"   placeholder="Order #">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <input type="submit" class="btn btn-primary btn-md" value="Search">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-md-2 ">
                                 <a href="{{ route('tickets.create') }}" class="btn btn-primary btn-md" role="button">Add
@@ -47,24 +64,20 @@
                                         {{ $ticket->id }}
                                     </td>
                                     <td>
-                                        {{ $ticket->orderId }}
+                                        {{ $ticket->order->number }}
                                     </td>
                                     <td>
                                         {{ $ticket->subject }}
                                     </td>
                                     <td>
-                                        {{ $ticket->customer->email }}
+                                        {{ $ticket->order->customer->email }}
                                     </td>
                                     <td>
-                                        {{ $ticket->createDate }}
-                                    </td>
-                                    <td>
-                                        <a href="{{action('TicketController@edit',['id'=>$ticket->id])}}"
-                                            class="btn btn-primary btn-md" role="button">Edit</a>
+                                        {{ $ticket->created_at->format('Y-m-d') }}
                                     </td>
                                     <td>
                                         <a href="{{action('TicketController@show',['id'=>$ticket->id])}}"
-                                            class="btn btn-primary btn-md" role="button">Edit</a>
+                                            class="btn btn-primary btn-sm" role="button">See</a>
                                     </td>
 
                                 </tr>

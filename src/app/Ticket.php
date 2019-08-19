@@ -15,12 +15,11 @@ class Ticket extends Model
         'message'
     ];
     protected $guarded = [
-        'id',
-        'createDate'
+        'id'
     ];
 
     public function order(){
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo('App\Order', 'orderId');
     }
 
 }

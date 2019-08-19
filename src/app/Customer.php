@@ -18,4 +18,14 @@ class Customer extends Model
     public function order(){
         return $this->hasMany(Order::class);
     }
+
+    public static function add($request){
+        $data = [
+            'name' => $request->input('customerName'),
+            'email' => $request->input('customerEmail'),
+        ];
+        
+        $query = Customer::create($data);
+		return $query->id;
+    }
 }

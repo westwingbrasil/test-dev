@@ -8,17 +8,24 @@ class Order extends Model
 {
     protected $table = 'orders';
     protected $fillable = [
-        'customerId'
+        'customerId',
+        'number'
     ];
     protected $guarded = [
         'id'
     ];
 
+    public static function add($data){
+        
+        $query = Order::create($data);
+		return $query->id;
+    }
+
     public function tickets(){
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany('App\Ticket', 'id', 'orderId');
     }
     
     public function customer(){
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo('App\Customer', 'customerId');
     }
 }

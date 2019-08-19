@@ -8,9 +8,10 @@
 
             <h3 class="card-header">Tickets - Add</h3>
 
+            @include('flash-message')
 
             <div class="card-body">
-                <form class="form" method="post" action="{{url('/ticket/store')}}">
+                <form class="form" method="post" action="{{action('TicketController@store')}}">
                     {{ csrf_field() }}
 
 
@@ -20,7 +21,7 @@
                             <label>
                                 Order #
                             </label>
-                            <input type="text" name="orderId" placeholder="" class="form-control col-md-3" required>
+                            <input type="text" name="orderNumber" placeholder="" class="form-control col-md-3" required>
                         </div>
 
                         <div class="form-group  ">
@@ -51,9 +52,17 @@
                             <textarea type="text" name="message" placeholder="" class="form-control col-md-6" required
                                 rows="3"></textarea>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-success btn-lg  col-md-2">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="submit" value="Save" class="btn btn-success btn-lg col-lg-12  ">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <a href="{{ route('tickets.index') }}" class="btn btn-primary btn-lg  col-lg-8"
+                                    role="button">Back</a>
+                            </div>
                         </div>
+
                     </div>
                 </form>
             </div>

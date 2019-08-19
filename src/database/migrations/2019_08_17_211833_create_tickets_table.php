@@ -19,7 +19,6 @@ class CreateTicketsTable extends Migration
             $table->string('customerName');
             $table->string('subject');
             $table->text('message');
-            $table->date('createDate');
             $table->timestamps();
 
             $table->foreign('orderId')->references('id')->on('orders');
