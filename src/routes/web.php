@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+    return redirect('tickets');
 });
 
 Route::resource('tickets', 'TicketController');
