@@ -18,4 +18,4 @@ Route::get('/', function () {
 
 Route::resource('tickets', 'TicketController');
 
-Route::post('tickets', 'TicketController@filter')->name('tickets.filter');
+Route::post('filter', 'TicketController@filter')->name('tickets.filter');
