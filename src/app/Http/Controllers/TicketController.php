@@ -24,7 +24,7 @@ class TicketController extends Controller
 
     public function showTickets(TicketRepository $ticketRepo, Request $request)
     {
-        $page = $request->only(['page'])['page'];
+        $page = $request->has(['page']) ? $request->only(['page'])['page'] : 1;
 
         return $ticketRepo->all($request->only(['userEmail', 'orderId']), $page);
     }
