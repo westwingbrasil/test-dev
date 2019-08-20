@@ -5,7 +5,7 @@ version: "3.1"
 services:
 
     mysql:
-      image: mysql:8.0
+      image: mysql:5.7
       container_name: laravel-mysql
       working_dir: /application
       volumes:
@@ -23,7 +23,7 @@ services:
       container_name: laravel-webserver
       working_dir: /application
       volumes:
-          - .:/application
+          - ./src:/application
           - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports:
        - "8888:80"
@@ -33,6 +33,6 @@ services:
       container_name: laravel-php-fpm
       working_dir: /application
       volumes:
-        - .:/application
+        - ./src:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
 
