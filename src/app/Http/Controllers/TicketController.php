@@ -13,13 +13,20 @@ class TicketController extends Controller
         try {
             return $ticketRepo->create($request->validated());
         } catch (\DomainException $e) {
-            return response($e->getMessage(),422);
+            return response([
+                "message" => $e->getMessage(),
+                "errors" => [
+                    "orderId" => [$e->getMessage()]
+                ]
+            ],422);
         }
     }
 
-    public function showTickets(TicketRepository $ticketRepo, Request $request, $page = 1)
+    public function showTickets(TicketRepository $ticketRepo, Request $request)
     {
-        return $ticketRepo->all($request->only(['email', 'orderId']), $page);
+        $page = $request->only(['page'])['page'];
+
+        return $ticketRepo->all($request->only(['userEmail', 'orderId']), $page);
     }
 
     public function showTicket($id, TicketRepository $ticketRepo)

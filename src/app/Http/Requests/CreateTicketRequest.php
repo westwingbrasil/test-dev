@@ -27,8 +27,8 @@ class CreateTicketRequest extends FormRequest
             'title' => 'required|max:255',
             'content' => 'required|max:255',
             'orderId' => 'required',
-            'user.email' => 'required|max:255|email',
-            'user.name' => 'required|max:255'
+            'email' => 'required|max:255|email',
+            'name' => 'required|max:255'
         ];
     }
 }

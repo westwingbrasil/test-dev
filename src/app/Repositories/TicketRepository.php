@@ -18,7 +18,7 @@ class TicketRepository extends EloquentRepository implements TicketRepositoryCon
     {
         // Caso as entidades desse sub domínio fiquem complexas, podemos criar um repositório similar a esse,
         // por hora, não há a menor necessidade disso.
-        $user = $this->getUser($data['user']);
+        $user = $this->getUser($data['email'], $data['name']);
         // O mesmo se aplica para pedidos
         $order = $this->getOrder($data['orderId'], $user);
         // Atributos de pesquisa e adição
@@ -34,13 +34,13 @@ class TicketRepository extends EloquentRepository implements TicketRepositoryCon
         return $ticket;
     }
 
-    private function getUser($data)
+    private function getUser($email, $name)
     {
         return User::firstOrCreate([
-            'email' => $data['email']
+            'email' => $email
         ], [
-            'email' => $data['email'],
-            'name' => $data['name']
+            'email' => $email,
+            'name' => $name
         ]);
     }
 
@@ -66,11 +66,11 @@ class TicketRepository extends EloquentRepository implements TicketRepositoryCon
     {
         $query = $this->getModel()::query()->join('user', 'user.id', '=', 'ticket.user_id');
 
-        if (array_key_exists("email", $filters)) {
-            $query = $query->where(['user.email' => $filters['userEmail']]);
+        if (array_key_exists("userEmail", $filters) && !empty($filters['userEmail'])) {
+            $query = $query->where('user.email', $filters['userEmail']);
         }
-        if (array_key_exists("orderId", $filters)) {
-            $query = $query->where(['order_id' => $filters['orderId']]);
+        if (array_key_exists("orderId", $filters) && !empty($filters['orderId'])) {
+            $query = $query->where('order_id', $filters['orderId']);
         }
 
         return $query->paginate(5, [
@@ -85,10 +85,14 @@ class TicketRepository extends EloquentRepository implements TicketRepositoryCon
     public function find($id)
     {
         return $this->getModel()::query()
-            ->where('id', $id)
+            ->where('ticket.id', $id)
             ->join('user', 'user.id', '=', 'ticket.user_id')
-            ->get();
-
+            ->select([
+                'user.name',
+                'user.email',
+                'ticket.*',
+            ])
+            ->first();
     }
 
 }
