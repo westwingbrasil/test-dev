@@ -1,5 +1,22 @@
 # Teste PHP para Desenvolvedor
 
+## Como rodar o projeto:
+Execute os seguintes comandos:
+
+```bash
+$ docker-compose up -d
+```
+
+```bash
+$ docker exec laravel-php-fpm php artisan migrate:refresh --seed
+```
+
+No Windows o container laravel-mysql não executa no momento que foi criado, é necessário parar e rodar novamente o docker-compose. Se for o caso, execute o comando abaixo e execute o migrate novamente.
+
+```bash
+$ docker-compose stop && docker-compose up -d
+```
+
 ## Objetivo:
 Desenvolver uma ferramenta simples de cadastro de tickets para o setor de atendimento ao cliente da empresa.
 
