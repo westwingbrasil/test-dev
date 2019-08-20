@@ -26,7 +26,7 @@ class CreateTicketRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'content' => 'required|max:255',
-            'orderId' => 'required',
+            'orderId' => 'required|integer',
             'email' => 'required|max:255|email',
             'name' => 'required|max:255'
         ];
