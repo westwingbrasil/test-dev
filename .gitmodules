@@ -1,0 +1,4 @@
+[submodule "laradock"]
+	path = laradock
+	url = https://github.com/dcresnitzky/laradock
+	branch = westwing-test
