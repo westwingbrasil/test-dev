@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resource('tickets', 'TicketsController')->only([
     'create', 'store', 'index', 'show'
 ]);
