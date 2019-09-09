@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TicketsController extends Controller
 {
@@ -49,13 +50,15 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email:strict|max:255',
             'order' => 'required|integer',
             'subject' => 'required',
             'body' => 'required'
         ]);
+
+        $validated = $validator->validate();
 
         $user_id = DB::table('users')->where('email', $validated['email'])->value('user_id');
         if (!$user_id) {
@@ -97,9 +100,9 @@ class TicketsController extends Controller
                 LIMIT 1;
             ', [$validated['order'], $user_id, $validated['order'], $user_id]);
         } catch (\Illuminate\Database\QueryException $e) {
-            // TODO: proper handling of integrity violation
             if ($e ->getCode() === '23000') {
-                throw $e;
+                $validator->errors()->add('order', 'Order #'.$validated['order'].' was not found in your orders');
+                return redirect()->route('tickets.create')->withErrors($validator)->withInput();
             }
 
             // TODO: proper handling of other errors
@@ -113,6 +116,9 @@ class TicketsController extends Controller
                 (:order_id, :subject, :body)
             ON DUPLICATE KEY UPDATE subject = VALUES(subject), body = VALUES(body)
         ', ['order_id' => $validated['order'], 'subject' => $validated['subject'], 'body' => $validated['body']]);
+
+        $request->session()->flash('alert-success', 'Your ticket has been created!');
+        return redirect()->route('tickets.create');
     }
 
     /**
