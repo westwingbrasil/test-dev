@@ -1,0 +1,38 @@
+version: "3"
+
+networks:
+  westwing-net:
+
+services:
+  app:
+    build:
+      context: .
+    depends_on:
+      - db
+    ports:
+      - 80:8080
+    environment:
+      DB_HOST: db
+    networks:
+      - westwing-net
+
+  db:
+    image: mysql:8.0
+    command: ["--default-authentication-plugin", "mysql_native_password"]
+    environment:
+      MYSQL_ROOT_PASSWORD: westwing
+      MYSQL_USER: westwing
+      MYSQL_PASSWORD: westwing
+      MYSQL_DATABASE: westwing
+    ports:
+      - 3306
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      westwing-net:
+        aliases:
+          - westwing-db
+
+volumes:
+  db-data:
+

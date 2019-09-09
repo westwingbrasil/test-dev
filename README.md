@@ -43,3 +43,28 @@ Desenvolver uma ferramenta simples de cadastro de tickets para o setor de atendi
 		- E-mail do cliente;
 		- Data de criação do ticket;
 - Criar tela de visualização de detalhe do ticket com todos os campos da tabela de tickets
+
+
+## Executando o projeto
+
+Para inicializar a aplicação e o banco de dados, rodar:
+```sh
+$ docker-compose up
+```
+
+Uma vez iniciado, para criar as tabelas no banco:
+```sh
+$ docker-compose exec app php artisan migrate:fresh
+```
+
+Caso queira preencher as tabelas com alguns dados:
+```sh
+$ docker-compose exec app php artisan db:seed
+```
+
+O projeto possui basicamente 3 páginas:
+| Página | Link |
+|---|---|
+| Novo ticket | [/tickets/create](http://localhost/tickets/create) |
+| Listar tickets | [/tickets](http://localhost/tickets/) |
+| Detalhes de ticket | /tickets/<ID> (por exemplo, [/tickets/1](http://localhost/tickets/1)) |
