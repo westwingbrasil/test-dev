@@ -1,5 +1,12 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
 
+<form>
+    <input type="email" name="email" />
+    <input type="text" name="order_id" />
+
+    <input type="submit" />
+</form>
+
 <table class="table tickets">
     <thead>
         <tr>

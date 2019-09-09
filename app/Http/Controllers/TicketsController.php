@@ -12,14 +12,21 @@ class TicketsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = DB::table('tickets')
+        $tickets_query = DB::table('tickets')
             ->join('orders', 'orders.order_id', 'tickets.order_id')
             ->join('users', 'users.user_id', 'orders.user_id')
-            ->select('tickets.*', 'users.email AS user_email')
-            ->paginate(5);
+            ->select('tickets.*', 'users.email AS user_email');
 
+        if ($request->input('email')) {
+            $tickets_query->where('users.email', $request->input('email'));
+        }
+        if ($request->input('order_id')) {
+            $tickets_query->where('tickets.order_id', $request->input('order_id'));
+        }
+
+        $tickets = $tickets_query->paginate(5);
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
