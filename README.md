@@ -63,6 +63,7 @@ $ docker-compose exec app php artisan db:seed
 ```
 
 O projeto possui basicamente 3 páginas:
+
 | Página | Link |
 |---|---|
 | Novo ticket | [/tickets/create](http://localhost/tickets/create) |
