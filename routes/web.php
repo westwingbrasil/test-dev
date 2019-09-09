@@ -16,5 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('tickets', 'TicketsController')->only([
-    'create', 'store'
+    'create', 'store', 'index'
 ]);

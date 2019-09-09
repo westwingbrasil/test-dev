@@ -14,7 +14,13 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        //
+        $tickets = DB::table('tickets')
+            ->join('orders', 'orders.order_id', 'tickets.order_id')
+            ->join('users', 'users.user_id', 'orders.user_id')
+            ->select('tickets.*', 'users.email AS user_email')
+            ->paginate(5);
+
+        return view('tickets.index', ['tickets' => $tickets]);
     }
 
     /**
