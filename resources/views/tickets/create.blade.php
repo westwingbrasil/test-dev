@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
 
+@include('includes.navigation')
+
 <main>
     @if(Session::has('alert-success'))
         <div class="alert alert-success">

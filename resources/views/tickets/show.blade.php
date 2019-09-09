@@ -1,8 +1,6 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
 
-<nav class="nav">
-    <a class="nav-link" href="{{ action('TicketsController@index') }}">All tickets</a>
-</nav>
+@include('includes.navigation')
 
 <main>
     <table class="table table-sm table-borderless ticket-details">

@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
 
+@include('includes.navigation')
+
 <main>
     <form>
         <div class="form-row">
