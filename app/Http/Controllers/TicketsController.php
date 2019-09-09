@@ -122,7 +122,14 @@ class TicketsController extends Controller
      */
     public function show($id)
     {
-        //
+        $ticket = DB::table('tickets')
+            ->join('orders', 'orders.order_id', 'tickets.order_id')
+            ->join('users', 'users.user_id', 'orders.user_id')
+            ->where('ticket_id', $id)
+            ->select('tickets.*', 'users.email AS user_email', 'users.name AS user_name')
+            ->first();
+
+        return view('tickets.show', ['ticket' => $ticket]);
     }
 
     /**
