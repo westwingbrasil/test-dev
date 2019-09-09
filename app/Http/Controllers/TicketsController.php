@@ -27,7 +27,7 @@ class TicketsController extends Controller
             $tickets_query->where('tickets.order_id', $request->input('order_id'));
         }
 
-        $tickets = $tickets_query->paginate(5);
+        $tickets = $tickets_query->oldest()->paginate(5);
         session()->flashInput($request->input());
         return view('tickets.index', ['tickets' => $tickets]);
     }
