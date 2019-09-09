@@ -27,6 +27,7 @@ class TicketsController extends Controller
         }
 
         $tickets = $tickets_query->paginate(5);
+        session()->flashInput($request->input());
         return view('tickets.index', ['tickets' => $tickets]);
     }
 

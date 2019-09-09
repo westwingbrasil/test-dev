@@ -7,6 +7,15 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+body {
+    padding: 1em 0;
+}
+
+main {
+    width: 80%;
+    margin: 0 auto;
+}
+
 .tickets {
     th, td {
         &:nth-child(1), &:nth-child(2), &:nth-child(5) {
