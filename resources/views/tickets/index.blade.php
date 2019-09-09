@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
+@extends('layouts.app')
 
-@include('includes.navigation')
+@section('title', 'Tickets')
 
-<main>
+@section('content')
     <form>
         <div class="form-row">
             <div class="form-group col">
@@ -45,5 +45,4 @@
     </table>
 
     {{ $tickets->links() }}
-
-</main>
+@endsection

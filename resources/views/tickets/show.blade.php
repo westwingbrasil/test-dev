@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
+@extends('layouts.app')
 
-@include('includes.navigation')
+@section('title', 'Ticket #'.$ticket->ticket_id)
 
-<main>
+@section('content')
     <table class="table table-sm table-borderless ticket-details">
         <tbody>
             <tr>
@@ -34,4 +34,4 @@
                 <td>{{ $ticket->body }}</td>
             </tr>
         </tbody>
-</main>
+@endsection

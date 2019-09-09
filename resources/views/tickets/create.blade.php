@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/app.css') }}" />
+@extends('layouts.app')
 
-@include('includes.navigation')
+@section('title', 'New ticket')
 
-<main>
+@section('content')
     @if(Session::has('alert-success'))
         <div class="alert alert-success">
             {{ Session::get('alert-success') }}
@@ -57,4 +57,4 @@
             <button type="submit" class="btn btn-primary">Create ticket</button>
         </div>
     </form>
-</main>
+@endsection
